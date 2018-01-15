@@ -1,3 +1,3 @@
 # yoexp
-nodejs express + adminlte + d3 
-add on web
+2 nodejs express + adminlte + d3 
+add on client 
