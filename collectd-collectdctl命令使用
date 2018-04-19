@@ -1,0 +1,44 @@
+collectdctl命令提供命令行接口对collectd进行控制，可以对collectd的运行进行监控
+
+原版文档描述如下：
+DESCRIPTION
+       collectdctl provides a control interface for collectd, which may be
+       used to interact with the daemon using the "unixsock plugin".
+       
+其中关键的是using the "unixsock plugin"，因为这个选项默认安装时关闭的，导致直接使用这个命令无法连接。
+需要在collectd.conf配置文件中打开这个特性
+
+使用apt install安装路径
+/etc/collectd/collectd.conf
+
+自编译安装路径
+/opt/collectd/etc/collectd.conf
+
+LoadPlugin unixsock
+<Plugin unixsock>
+        SocketFile "/var/run/collectd-unixsock"
+        SocketGroup "collectd"
+        SocketPerms "0660"
+        DeleteSocket false
+</Plugin>
+
+修改后重启collectd服务
+
+然后使用collectdctl执行一下listval看看目前有哪些采集参数
+root@ubuntu:/opt/collectd/bin# ./collectdctl listval
+ubuntu/cpu-0/cpu-idle
+ubuntu/cpu-0/cpu-interrupt
+ubuntu/cpu-0/cpu-nice
+ubuntu/cpu-0/cpu-softirq
+ubuntu/cpu-0/cpu-steal
+ubuntu/cpu-0/cpu-system
+ubuntu/cpu-0/cpu-user
+ubuntu/cpu-0/cpu-wait
+ubuntu/cpu-1/cpu-idle
+ubuntu/cpu-1/cpu-interrupt
+ubuntu/cpu-1/cpu-nice
+
+然后可以选择需要的变量单独查询
+root@ubuntu:/opt/collectd/bin# ./collectdctl getval ubuntu/memory/memory-free
+value=1.801150e+09
+
