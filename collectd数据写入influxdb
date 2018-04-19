@@ -1,0 +1,71 @@
+1.修改collectd配置文件collectd.conf
+增加以下配置，启用网络输出插件，向25826端口的服务守护进程（influxdb）写入数据
+
+LoadPlugin  network
+<Plugin network>
+    Server "127.0.0.1" "25826"
+</Plugin>
+
+
+2.修改influxdb配置文件/etc/influxdb/influxdb.conf
+增加以下配置，从接收从collectd发来的采集数据
+
+[[collectd]]
+  enabled = true
+  bind-address = ":25826"
+  database = "collectd"
+  typesdb = "/opt/collectd/share/collectd"
+
+重启两个进程后influxdb中会出现一个collectd数据库，包含从collectd采集到的数据
+
+
+3.使用influx客户端查看数据
+
+# influx
+
+查看当前influxdb有哪些数据库
+> SHOW DATABASES
+name: databases
+name
+----
+_internal
+mydb
+collectd
+
+切换当前数据库
+> use collectd
+Using database collectd
+
+查看当前数据库所有的表
+> show measurements
+name: measurements
+name
+----
+cpu_value
+interface_rx
+interface_tx
+load_longterm
+load_midterm
+load_shortterm
+memory_value
+
+查看一个表的数据
+> SELECT * FROM "cpu_value" limit 10
+name: cpu_value
+time                host   instance type type_instance value
+----                ----   -------- ---- ------------- -----
+1524128356783770453 ubuntu 10       cpu  interrupt     0
+1524128356783782565 ubuntu 11       cpu  interrupt     0
+1524128356783783344 ubuntu 0        cpu  softirq       810510
+1524128356783784021 ubuntu 1        cpu  softirq       277077
+1524128356783784612 ubuntu 2        cpu  softirq       227938
+1524128356783785127 ubuntu 3        cpu  softirq       94443
+1524128356783786044 ubuntu 4        cpu  softirq       71319
+1524128356783786774 ubuntu 5        cpu  softirq       251596
+1524128356783787435 ubuntu 6        cpu  softirq       41500
+1524128356783788136 ubuntu 7        cpu  softirq       36624
+
+4.influxdb的数据通过grafana显示在dashboard中
+collectd写入influxdb的数据格式可以直接在grafana中显示出来，在grafana中添加一个influxdb的数据源，成功添加后，
+collectd生成的数据表项会在配置数据源时在列表中出现，选择需要的测量项可生成各种图表。
+
