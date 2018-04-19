@@ -1,4 +1,88 @@
 collectd安装
-  在ubuntu16.04下可以直接安装
+
+1.在ubuntu16.04下可以直接安装，版本是5.5.1
   sudo apt install collectd collectd-utils
+
+
+root@etcd1:/etc/collectd# collectd -h
+Usage: collectd [OPTIONS]
+
+Available options:
+  General:
+    -C <file>       Configuration file.
+                    Default: /etc/collectd/collectd.conf
+    -t              Test config and exit.
+    -T              Test plugin read and exit.
+    -P <file>       PID-file.
+                    Default: /var/run/collectd.pid
+    -f              Don't fork to the background.
+    -h              Display help (this message)
+
+Builtin defaults:
+  Config file       /etc/collectd/collectd.conf
+  PID file          /var/run/collectd.pid
+  Plugin directory  /usr/lib/collectd
+  Data directory    /var/lib/collectd
+
+collectd 5.5.1, http://collectd.org/
+by Florian octo Forster <octo@collectd.org>
+for contributions see `AUTHORS'
+
+2.用源码编译安装
+  编译collectd，在github下载源码后解压到一个目录，与通常使用automake的所有开源软件步骤相同，执行configure,make,make install,编译版本的好处是
+  可以获得最新版本，可以自定义defaults参数等等。
   
+  在下载首页 https://collectd.org/download.shtml，目前最新版本链接：https://storage.googleapis.com/collectd-tarballs/collectd-5.8.0.tar.bz2
+  
+  tar xf collectd-version.tar.bz2
+  cd collectd-version
+  ./configure
+  make all install
+  
+  自编译默认的安装目录在/opt下
+  /opt/collectd/
+  ├── bin
+  ├── etc
+  ├── include
+  │   └── collectd
+  ├── lib
+  │   ├── collectd
+  │   └── pkgconfig
+  ├── sbin
+  ├── share
+  │   ├── collectd
+  │   └── man
+  │       ├── man1
+  │       └── man5
+  └── var
+      ├── lib
+      │   └── collectd
+      ├── log
+      └── run
+  
+  通过帮助可以看到默认目录的变化：
+  root@ubuntu:/opt/collectd/sbin# ./collectd -h
+  Usage: collectd [OPTIONS]
+
+  Available options:
+    General:
+      -C <file>       Configuration file.
+                      Default: /opt/collectd/etc/collectd.conf
+      -t              Test config and exit.
+      -T              Test plugin read and exit.
+      -P <file>       PID-file.
+                      Default: /opt/collectd/var/run/collectd.pid
+      -f              Don't fork to the background.
+      -B              Don't create the BaseDir
+      -h              Display help (this message)
+
+  Builtin defaults:
+    Config file       /opt/collectd/etc/collectd.conf
+    PID file          /opt/collectd/var/run/collectd.pid
+    Plugin directory  /opt/collectd/lib/collectd
+    Data directory    /opt/collectd/var/lib/collectd
+
+  collectd 5.8.0, http://collectd.org/
+  by Florian octo Forster <octo@collectd.org>
+  for contributions see `AUTHORS'
+
