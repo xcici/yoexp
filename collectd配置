@@ -1,0 +1,4 @@
+collectd安装
+  在ubuntu16.04下可以直接安装
+  sudo apt install collectd collectd-utils
+  
