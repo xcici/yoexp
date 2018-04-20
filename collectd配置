@@ -86,3 +86,17 @@ for contributions see `AUTHORS'
   by Florian octo Forster <octo@collectd.org>
   for contributions see `AUTHORS'
 
+****自己编译版本需要强调的问题****
+使用autoconf的configure对于没有找到的依赖库只有一个结果提示，并没有错误，这对于插件能否编译成功有直接影响
+例如比较重要的ping插件，需要先安装liboping的开发依赖环境liboping-dev，（Ubuntu下： sudo apt install liboping-dev）
+执行configure后注意输出结果，看到ping ... yes代表该插件已经正确安装。
+
+Modules:
+    aggregation . . . . . yes
+    amqp    . . . . . . . no (amqp.h not found)
+    apache  . . . . . . . yes
+    java  . . . . . . . . no (jar not found)
+    load  . . . . . . . . yes
+    ping  . . . . . . . . yes
+    postgresql  . . . . . no (libpq-fe.h not found)
+
