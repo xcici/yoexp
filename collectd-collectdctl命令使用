@@ -42,3 +42,8 @@ ubuntu/cpu-1/cpu-nice
 root@ubuntu:/opt/collectd/bin# ./collectdctl getval ubuntu/memory/memory-free
 value=1.801150e+09
 
+不能连接unixsock问题：
+系统意外重启有时会导致socket文件 /var/run/collectd-unixsock 不能清理，这种情况下会返回如下错误，与没有启动unixsock插件一样。
+解决的方法是先停止collectd服务，删除这个socket文件再重新启动collectd服务进程。
+root@ubuntu:/opt/collectd/bin# ./collectdctl listval
+ERROR: Failed to connect to daemon at unix:/opt/collectd/var/run/collectd-unixsock: Connection refused.
