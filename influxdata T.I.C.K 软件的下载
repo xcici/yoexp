@@ -1,3 +1,49 @@
 
+T = Telegraf is a plugin-driven server agent for collecting and reporting metrics.
+I = InfluxDB is a time series database built from the ground up to handle high write and query loads.
+C = Chronograf is a graphing and visualization application for performing ad hoc exploration of data.
+K = Kapacitor is a data processing framework proving alerting, anomaly detection and action frameworks.
+
+简单表达：
+Telegraf - 数据采集
+InfluxDB - 数据接收和存储
+Chronograf - 数据汇总展示
+Kapacitor - 数据处理，比如监控策略等
 
 官方的下载地址是 https://portal.influxdata.com/downloads，该页面可以显示但是，下载链接在国内并不能用，看源码可知国内屏蔽了googleapis.com
+网页源码中包含了下载地址：
+
+        <h4>Docker Image</h4>
+        <pre><code>docker pull telegraf</code></pre>
+        <hr />
+        <h4>Ubuntu &amp; Debian    <p style="float:right;">SHA256: <code>dc24932fa1aef9392582880c077dd2493b9f2c66babd7733a0654540bbb5003b</code></p></h4>
+        <pre><code>wget https://dl.influxdata.com/telegraf/releases/telegraf_1.6.2-1_amd64.deb
+sudo dpkg -i telegraf_1.6.2-1_amd64.deb</code></pre>
+        <hr />
+        <h4>RedHat &amp; CentOS    <p style="float:right;">SHA256: <code>99e572f75feeb950de409a8dd70a511abc3d7ef9b9da898f1b685c1901e72e0b</code></p></h4>
+        <pre><code>wget https://dl.influxdata.com/telegraf/releases/telegraf-1.6.2-1.x86_64.rpm
+sudo yum localinstall telegraf-1.6.2-1.x86_64.rpm</code></pre>
+        <hr />
+        <h4>Windows Binaries (64-bit)    <p style="float:right;">SHA256: <code>257ce9860baa29f4ca7128bd324372de18cb1dae4c12c8f7d052d4c8bde4fce6</code></p></h4>
+        <pre><code>wget https://dl.influxdata.com/telegraf/releases/telegraf-1.6.2_windows_amd64.zip
+unzip telegraf-1.6.2_windows_amd64.zip</code></pre>
+        <hr />
+        <h4>Linux Binaries (64-bit)    <p style="float:right;">SHA256: <code>a4b0bc6d0fe88545dcc9fd297373fd5ce22eb49f9a4042bdd879b8c075793db8</code></p></h4>
+        <pre><code>wget https://dl.influxdata.com/telegraf/releases/telegraf-1.6.2_linux_amd64.tar.gz
+tar xf telegraf-1.6.2_linux_amd64.tar.gz</code></pre>
+        <hr />
+        <h4>Linux Binaries (32-bit)    <p style="float:right;">SHA256: <code>4b8717214d6e983ed468dad819c441418dcc7ec0f3127d056326cb1b8b29f454</code></p></h4>
+        <pre><code>wget https://dl.influxdata.com/telegraf/releases/telegraf-1.6.2_linux_i386.tar.gz
+tar xf telegraf-1.6.2_linux_i386.tar.gz</code></pre>
+        <hr />
+        <h4>Linux Binaries (ARM)    <p style="float:right;">SHA256: <code>ecd4edb365afba68fb8daa26f3b0bcf960b98b22699c0f6aba016b849a81c6ac</code></p></h4>
+        <pre><code>wget https://dl.influxdata.com/telegraf/releases/telegraf-1.6.2_linux_armhf.tar.gz
+tar xf telegraf-1.6.2_linux_armhf.tar.gz</code></pre>
+        <hr />
+      </div>
+      
+选择需要下载的版本直接拷贝下来将https改为http即可下载
+网页源码中的链接：https://dl.influxdata.com/telegraf/releases/telegraf_1.6.2-1_amd64.deb 
+修改后的链接：http://dl.influxdata.com/telegraf/releases/telegraf_1.6.2-1_amd64.deb 
+下载后安装方法在源码中下载链接后：
+如ubuntu下为：sudo dpkg -i telegraf_1.6.2-1_amd64.deb
