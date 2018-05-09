@@ -1,0 +1,3 @@
+
+
+官方的下载地址是 https://portal.influxdata.com/downloads，该页面可以显示但是，下载链接在国内并不能用，看源码可知国内屏蔽了googleapis.com
