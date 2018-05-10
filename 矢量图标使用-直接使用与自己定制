@@ -17,3 +17,6 @@ https://www.flaticon.com/ 上可通过关键词查找合适的图标，然后下
 自定义图标应该都定义在一个字体包中，当然也可以定义多个。
 使用 https://icomoon.io/ 提供的在线生成功能可自己在线制作找到的svg图标，然后选择一个适当的名字保存下载，
 这样生成的字体包与fontawsome的没有什么不同。
+
+在https://icomoon.io/上下载的自制字体包下载为一个zip文件，解压后引入style.css文件即可。
+退出后如果需要继续加入图标可先import fonts/icomoon.svg 文件，这样可以基于已生成的图标库扩充。
