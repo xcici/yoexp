@@ -1,0 +1,32 @@
+d3.js 4.0以后采用多个包代替原来的allinone方式，这些改变会造成不兼容问题，好处是可以裁剪无用代码。
+不过使用bower install d3得到的仍然是打包的完整文件，既包含了所有的模块。
+
+定制打包过程：
+
+先下载工程源码
+到 https://github.com/d3/d3 网站，选择右边 clone or download 按钮
+
+在linux下 
+git clone https://github.com/d3/d3.git
+
+或选择直接下载zip文件
+
+因为打包使用rollup，所以需要先安装 rollup：
+sudo npm install rollup -g
+
+然后进入解压目录d3
+
+https://github.com/d3/d3 网站首页有一段提示 Create a custom bundle using Rollup， 这个链接会跳转到一个demo页面，
+提示通过下面两个命令生成定制包，
+npm install
+npm run prepublish
+定制包需要修改index.js文件，默认的文件包含所有包，所以只需要裁剪这个文件就可以完成定制。
+
+npm install是安装nodejs需要的包，这个没有问题，后面的命令执行会出错，因为并没有prepublish的script项
+执行npm run会提示
+available via `npm run-script`:
+  prepublishOnly
+  
+执行 npm run prepublishOnly 会正确生成打包后的d3.js文件在dist目录下。
+
+目前最新版本是5.4，与原来的3.x版本存在兼容性问题，原来的部分代码可能会出错。
