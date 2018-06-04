@@ -18,6 +18,14 @@ LoadPlugin  network
 
 重启两个进程后influxdb中会出现一个collectd数据库，包含从collectd采集到的数据
 
+启动influxdb：
+在ubuntu下通过apt-get安装的influxdb使用systemctl命令启动和监控
+systemctl start influxdb
+
+重新启动collectd
+如果是编译安装的collectd，启动可在/opt/collectd/sbin目录下直接执行前台程序
+cd /opt/collectd/sbin
+./collectd -f 
 
 3.使用influx客户端查看数据
 
