@@ -1,0 +1,71 @@
+使用collectd threshold功能产生的通知事件监控url的状态
+
+curl超时时测量值没有返回，但是我们需要有返回值产生事件来触发状态反转
+
+LoadPlugin curl
+<Plugin curl>
+
+    <Page "www.baidu.com">
+      Plugin "curl"
+      URL "http://www.baidu.com"
+      Timeout 10000
+      MeasureResponseTime true
+      MeasureResponseCode true
+    </Page>
+    <Page "google.com">
+      Plugin "curl"
+      URL "https://google.com"
+      Timeout 10000
+      MeasureResponseTime true
+      MeasureResponseCode true
+    </Page>
+
+</Plugin>
+
+需要改造一下curl plugin，具体方法如下：
+
+找到curl.c，修改cc_read_page函数
+
+static int cc_read_page(web_page_t *wp) /* {{{ */
+{
+  int status;
+  cdtime_t start = 0;
+
+  if (wp->response_time)
+    start = cdtime();
+
+  wp->buffer_fill = 0;
+
+  curl_easy_setopt(wp->curl, CURLOPT_URL, wp->url);
+
+  status = curl_easy_perform(wp->curl);
+  if (status != CURLE_OK) {
+    ERROR("curl plugin: curl_easy_perform failed with status %i: %s", status,
+          wp->curl_errbuf);
+
+    /* 增加的代码 */
+    if (status == 28) {
+        long response_code = 600;
+        cc_submit_response_code(wp, response_code);
+    }
+
+    return -1;
+  }
+
+编译后替换plugins目录中的库文件重启collectd
+经过改造后的curl在timeout后会返回一个600的代码用来判断失败，然后可在threshold中配置检查这个值产生failure事件
+
+LoadPlugin "threshold"
+<Plugin threshold>
+   <Host "localhost">
+     <Plugin "curl">
+     
+        <Type "response_code">
+          FailureMax 500
+          Persist true  # 持续发送
+        </Type>
+
+     </Plugin>
+
+   </Host>
+</Plugin>
