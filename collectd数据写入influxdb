@@ -16,6 +16,15 @@ LoadPlugin  network
   database = "collectd"
   typesdb = "/opt/collectd/share/collectd"
 
+****有关typesdb****
+typesdb概念源于rrdtool，描述记录数据是的类型相关信息，对于自定义的类型，要保证collectd和influxdb的plugin都指向一致的typesdb
+才能保证类型能被正确解析，否则不会在influxdb中产生记录
+collectd配置文件 collectd.conf
+TypesDB     "/opt/collectd/share/collectd/types.db"
+influxdb配置文件/etc/influxdb/influxdb.conf
+[[collectd]]
+   typesdb = "/opt/collectd/share/collectd" (指向的是目录)
+
 重启两个进程后influxdb中会出现一个collectd数据库，包含从collectd采集到的数据
 
 启动influxdb：
