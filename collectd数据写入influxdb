@@ -1,3 +1,7 @@
+可参考资源：
+https://anomaly.io/collectd-metrics-to-influxdb/
+
+
 1.修改collectd配置文件collectd.conf
 增加以下配置，启用网络输出插件，向25826端口的服务守护进程（influxdb）写入数据
 
